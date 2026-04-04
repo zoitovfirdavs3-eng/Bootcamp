@@ -20,7 +20,7 @@ elForm.addEventListener("submit", (evt) => {
       checkNumber++;
       return (elResult.textContent = `Afsuski hato urinish boldi. Sizda qolgan urinishlar soni ${5 - checkNumber}`);
     } else if (inpNum == randomNumber) {
-      elResult.textContent = "Tabriklayman siz tog'ri qiymat kiritdingiz";
+      elResult.textContent = "Tabriklayman siz tog'ri qiymat kiritdingiz endi restart tugmasini bosing";
     }
   } else {
     elResult.textContent = `Sizda urinishlar qolmadi endi yangi qiymatni topishga harakat qiling
@@ -37,4 +37,4 @@ elRestartBtn.addEventListener("click", () => {
 elAnswerBtn.addEventListener("click", (evt) => {
   evt.preventDefault();
   elAnswerOut.textContent = `Men o'ylagan son ${randomNumber}`;
-})
+});

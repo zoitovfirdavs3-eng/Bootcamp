@@ -18,9 +18,46 @@ elForm.addEventListener("submit", (evt) => {
   if (checkNumber < 5) {
     if (inpNum != randomNumber) {
       checkNumber++;
-      return (elResult.textContent = `Afsuski hato urinish boldi. Sizda qolgan urinishlar soni ${5 - checkNumber}`);
+
+      elResult.textContent = `❌ Xato! Qolgan urinishlar: ${5 - checkNumber}`;
+
+      // effektlar
+      elForm.classList.add("shake");
+      elInp.classList.add("error");
+      elResult.classList.add("error-text");
+
+      // 300ms dan keyin olib tashlaymiz
+      setTimeout(() => {
+        elForm.classList.remove("shake");
+        elInp.classList.remove("error");
+        elResult.classList.remove("error-text");
+      }, 300);
+
+      return;
     } else if (inpNum == randomNumber) {
-      elResult.textContent = "Tabriklayman siz tog'ri qiymat kiritdingiz endi restart tugmasini bosing";
+      elResult.textContent = "🎉 Tabriklayman! Siz yutdingiz!";
+
+      let duration = 2000;
+      let end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
     }
   } else {
     elResult.textContent = `Sizda urinishlar qolmadi endi yangi qiymatni topishga harakat qiling

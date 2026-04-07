@@ -120,3 +120,26 @@ body > p {
   font-weight: bold;
   color: #ffe066;
 }
+/* xato effekt */
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+/* input xato bo‘lsa */
+.error {
+  border-color: red !important;
+  background: #ffe6e6;
+}
+
+/* result xato rang */
+.error-text {
+  color: #ff4d4d;
+}

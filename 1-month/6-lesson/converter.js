@@ -5,6 +5,7 @@ const elResult = document.querySelector(".js-result");
 
 elForm.addEventListener("submit", (evt) => {
     evt.preventDefault();
+    const val = Number(elInp.value);
     if(!val){
         elResult.textContent = '';
         return alert('Qiymatni kiriting');

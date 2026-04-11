@@ -1,0 +1,133 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: white;
+}
+
+/* NAV LINKS */
+a {
+  text-decoration: none;
+  color: white;
+  background: rgba(255,255,255,0.1);
+  padding: 8px 18px;
+  border-radius: 20px;
+  transition: 0.3s;
+  display: inline-block;
+}
+
+a:hover {
+  background: rgba(0, 242, 254, 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #00f2fe;
+}
+
+/* FORM CARD */
+.js-form {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  padding: 25px;
+  border-radius: 18px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* TITLE */
+.js-form h1 {
+  margin-bottom: 15px;
+}
+
+/* INPUT */
+.js-inp {
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  margin-bottom: 10px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  transition: 0.3s;
+}
+
+.js-inp::placeholder {
+  color: #ccc;
+}
+
+.js-inp:focus {
+  box-shadow: 0 0 10px #00f2fe;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(45deg, #00f2fe, #4facfe);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00f2fe;
+}
+
+/* RESULT */
+.js-result {
+  font-size: 18px;
+  min-height: 20px;
+}
+
+/* LIST */
+.js-car-list {
+  width: 320px;
+  list-style: none;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* LIST ITEM */
+.js-car-list li {
+  padding: 9px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  transition: 0.2s;
+}
+
+/* HOVER */
+.js-car-list li:hover {
+  background: rgba(0, 242, 254, 0.2);
+  transform: translateX(5px);
+  cursor: pointer;
+}
+
+/* SCROLL */
+.js-car-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.js-car-list::-webkit-scrollbar-thumb {
+  background: #00f2fe;
+  border-radius: 10px;
+}

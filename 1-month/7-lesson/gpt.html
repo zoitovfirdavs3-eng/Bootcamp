@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokémon ULTIMATE BATTLE</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:radial-gradient(circle,#0f172a,#020617);
+color:white;
+}
+
+.screen{display:none;padding:20px}
+.active{display:block}
+
+.header{
+text-align:center;
+padding:10px;
+font-size:28px;
+font-weight:bold;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:15px;
+}
+
+.card{
+background:#1e293b;
+border-radius:16px;
+padding:10px;
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 10px 20px rgba(0,0,0,0.4);
+}
+
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 15px 30px rgba(0,0,0,0.6);
+}
+
+.card img{width:90px}
+
+.battle{
+display:flex;
+justify-content:space-around;
+align-items:center;
+margin-top:30px;
+}
+
+.poke img{
+width:140px;
+transition:0.3s;
+}
+
+.hp-bar{
+width:160px;
+height:12px;
+background:#334155;
+border-radius:10px;
+overflow:hidden;
+}
+
+.hp{
+height:100%;
+background:linear-gradient(90deg,limegreen,green);
+width:100%;
+transition:0.3s;
+}
+
+.hit{animation:shake 0.3s}
+.dead{filter:grayscale(1);opacity:0.5}
+
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-10px)}
+50%{transform:translateX(10px)}
+100%{transform:translateX(0)}
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.attack{background:#ef4444;color:white}
+.heal{background:#22c55e;color:white}
+.restart{background:#3b82f6;color:white}
+.ai{background:#8b5cf6;color:white}
+
+.log{
+text-align:center;
+margin-top:20px;
+min-height:20px;
+font-size:18px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">⚡ Pokémon Ultimate Battle</div>
+
+<!-- SELECT SCREEN -->
+<div class="screen active" id="select">
+<h2 style="text-align:center">Select Pokémon</h2>
+<div class="grid" id="list"></div>
+</div>
+
+<!-- BATTLE SCREEN -->
+<div class="screen" id="battle">
+
+<h2 style="text-align:center">⚔️ Battle Arena</h2>
+
+<div class="battle">
+
+<div class="poke">
+<h3 id="pName"></h3>
+<img id="pImg">
+<div class="hp-bar"><div id="pHp" class="hp"></div></div>
+</div>
+
+<h2>VS</h2>
+
+<div class="poke">
+<h3 id="eName"></h3>
+<img id="eImg">
+<div class="hp-bar"><div id="eHp" class="hp"></div></div>
+</div>
+
+</div>
+
+<div style="text-align:center;margin-top:20px">
+<button class="attack" onclick="attack()">⚔️ Attack</button>
+<button class="heal" onclick="heal()">💊 Heal</button>
+<button class="ai" onclick="toggleAI()">🤖 AI</button>
+<button class="restart" onclick="restart()">🔄 Restart</button>
+</div>
+
+<div class="log" id="log"></div>
+
+</div>
+
+<script src="./js/pokemons.js"></script>
+
+<script>
+let player=null;
+let enemy=null;
+let pHP=100,eHP=100;
+let ai=true;
+
+const list=document.getElementById('list');
+
+pokemons.slice(0,60).forEach(p=>{
+const div=document.createElement('div');
+div.className='card';
+div.innerHTML=`<img src="${p.img}"><h4>${p.name}</h4>`;
+
+div.onclick=()=>{
+if(!player){
+player=p;
+alert("Player selected: "+p.name);
+}else{
+enemy=p;
+startBattle();
+}
+};
+list.appendChild(div);
+});
+
+function show(s){
+document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+document.getElementById(s).classList.add('active');
+}
+
+function startBattle(){
+show('battle');
+pHP=100;eHP=100;
+
+pName.innerText=player.name;
+eName.innerText=enemy.name;
+
+pImg.src=player.img;
+eImg.src=enemy.img;
+
+update();
+}
+
+function update(){
+pHp.style.width=pHP+"%";
+eHp.style.width=eHP+"%";
+
+if(pHP<=0){log("💀 You Lost");eImg.classList.add('dead')}
+if(eHP<=0){log("🏆 You Won");pImg.classList.add('dead')}
+}
+
+function log(t){document.getElementById('log').innerText=t}
+
+function attack(){
+if(pHP<=0||eHP<=0)return;
+
+let crit=Math.random()<0.2;
+let dmg=Math.floor(Math.random()*20)+5;
+if(crit)dmg*=2;
+
+eHP-=dmg;if(eHP<0)eHP=0;
+
+eImg.classList.add('hit');
+setTimeout(()=>eImg.classList.remove('hit'),300);
+
+log(crit?"🔥 CRITICAL HIT! "+dmg:"⚔️ You hit "+dmg);
+
+update();
+
+if(ai&&eHP>0)setTimeout(enemyTurn,500);
+}
+
+function enemyTurn(){
+if(pHP<=0||eHP<=0)return;
+
+let r=Math.random();
+if(r<0.3) enemyHeal();
+else enemyAttack();
+}
+
+function enemyAttack(){
+let dmg=Math.floor(Math.random()*18)+5;
+pHP-=dmg;if(pHP<0)pHP=0;
+
+pImg.classList.add('hit');
+setTimeout(()=>pImg.classList.remove('hit'),300);
+
+log("🔥 Enemy hit " + dmg);
+update();
+}
+
+function enemyHeal(){
+let h=Math.floor(Math.random()*12)+5;
+eHP+=h;if(eHP>100)eHP=100;
+log("🤖 Enemy healed " + h);
+update();
+}
+
+function heal(){
+let h=Math.floor(Math.random()*15)+5;
+pHP+=h;if(pHP>100)pHP=100;
+log("💊 You healed " + h);
+update();
+
+if(ai) setTimeout(enemyTurn,500);
+}
+
+function toggleAI(){
+ai=!ai;
+alert("AI: " + ai);
+}
+
+function restart(){
+pHP=100;eHP=100;
+pImg.classList.remove('dead','hit');
+eImg.classList.remove('dead','hit');
+log("🔄 Game restarted!");
+update();
+show('select');
+}
+
+</script>
+
+</body>
+</html>

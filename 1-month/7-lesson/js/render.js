@@ -1,53 +1,102 @@
 const elFrom = document.querySelector(".js-form");
-const elInp = elFrom.querySelector(".js-inp");
+const elNameInp = elFrom.querySelector(".js-name-inp");
+const elTypeInp = elFrom.querySelector(".js-type-inp");
 const elResult = document.querySelector(".js-pokemons-list");
 
-pokemons = pokemons.slice(0, 10);
+pokemons = pokemons.slice(0, 100);
 
 const renderFn = (arr) => {
   for (let pokemon of arr) {
     let newLi = document.createElement("li");
+    let newDiv = document.createElement("div");
     let newName = document.createElement("h2");
     let newId = document.createElement("span");
     let newImg = document.createElement("img");
     let newType = document.createElement("p");
+
+    newLi.classList.add("pokemon-card");
+    newName.classList.add("pokemon-name");
+    newId.classList.add("pokemon-id");
+    newImg.classList.add("pokemon-img");
+    newType.classList.add("pokemon-type");
 
     newName.textContent = `Ismi: ${pokemon.name}`;
     newId.textContent = `Raqami: ${pokemon.id}`;
     newImg.src = pokemon.img;
     newType.textContent = `Sehrli kuchi: ${pokemon.type}`;
 
-    newLi.append(newName, newId, newImg, newType);
+    newDiv.append(newName, newId, newImg, newType);
+    newLi.append(newDiv);
     elResult.append(newLi);
   }
 };
 
 renderFn(pokemons);
 
-elFrom.addEventListener("submit", (evt) => {
+elNameInp.addEventListener("keyup", (evt) => {
   evt.preventDefault();
   elResult.innerHTML = "";
-  let val = elInp.value.trim();
-  if(!val) return renderFn(pokemons);
+  let val = elNameInp.value.trim();
+  if (!val) return renderFn(pokemons);
   let searchRegex = new RegExp(val, "gi");
   let filterPokemons = pokemons.filter(function (pokemon) {
     return pokemon.name.match(searchRegex);
   });
-  for(let fPok of filterPokemons){
+  for (let fPok of filterPokemons) {
     let newLi = document.createElement("li");
+    let newDiv = document.createElement("div");
     let newName = document.createElement("h2");
     let newId = document.createElement("span");
     let newImg = document.createElement("img");
     let newType = document.createElement("p");
 
-    newName.textContent = fPok.name;
-    newId.textContent = fPok.id;
+    newLi.classList.add("pokemon-card");
+    newName.classList.add("pokemon-name");
+    newId.classList.add("pokemon-id");
+    newImg.classList.add("pokemon-img");
+    newType.classList.add("pokemon-type");
+
+    newName.textContent = `Ismi: ${fPok.name}`;
+    newId.textContent = `Raqami: ${fPok.id}`;
     newImg.src = fPok.img;
-    newType.textContent = fPok.type;
+    newType.textContent = `Sehrli kuchi: ${fPok.type}`;
 
-    newLi.classList.add("w-25", "border", "bg-secondary", "text-center", "d-flex", "flex-column");
+    newDiv.append(newName, newId, newImg, newType);
+    newLi.append(newDiv);
+    elResult.append(newLi);
+  }
+});
 
-    newLi.append(newName, newId, newImg, newType);
+elTypeInp.addEventListener("keyup", (evt) => {
+  evt.preventDefault();
+  elResult.innerHTML = "";
+  let val = elTypeInp.value.trim();
+  if (!val) return renderFn(pokemons);
+  let searchRegex = new RegExp(val, "gi");
+  let filterPokemons = pokemons.filter(function (pokemon) {
+    return pokemon.type.some((p) => p.match(searchRegex));
+  });
+  for (let fPok of filterPokemons) {
+    let newLi = document.createElement("li");
+    let newDiv = document.createElement("div");
+    let newName = document.createElement("h2");
+    let newId = document.createElement("span");
+    let newImg = document.createElement("img");
+    let newType = document.createElement("p");
+
+    newLi.classList.add("pokemon-card");
+    newName.classList.add("pokemon-name");
+    newId.classList.add("pokemon-id");
+    newImg.classList.add("pokemon-img");
+    newType.classList.add("pokemon-type");
+
+    newName.textContent = `Ismi: ${fPok.name}`;
+    newId.textContent = `Raqami: ${fPok.id}`;
+    newImg.src = fPok.img;
+    newType.textContent = `Sehrli kuchi: ${fPok.type}`;
+
+    newDiv.append(newName, newId, newImg, newType);
+    newLi.append(newDiv);
     elResult.append(newLi);
   }
 });

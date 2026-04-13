@@ -3,8 +3,6 @@ const elNameInp = elFrom.querySelector(".js-name-inp");
 const elTypeInp = elFrom.querySelector(".js-type-inp");
 const elResult = document.querySelector(".js-pokemons-list");
 
-pokemons = pokemons.slice(0, 100);
-
 const renderFn = (arr) => {
   for (let pokemon of arr) {
     let newLi = document.createElement("li");

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Battle Arena</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <!-- Selection Screen -->
+    <div id="selection-screen" class="screen active">
+        <header class="header">
+            <h1>Choose Your Pokémon</h1>
+            <p class="subtitle">Select your fighter and start the battle!</p>
+        </header>
+        
+        <div class="search-container">
+            <form class="search-form">
+                <input type="text" class="search-name" placeholder="Search by name...">
+                <input type="text" class="search-type" placeholder="Search by type...">
+                <button type="button" class="clear-btn">Clear</button>
+            </form>
+        </div>
+
+        <div class="pokemon-grid" id="pokemon-list">
+            <!-- Pokemon cards will be rendered here -->
+        </div>
+
+        <div class="no-results" id="no-results" style="display: none;">
+            <div class="no-results-content">
+                <h2> Pokémon topilmadi </h2>
+                <p>Boshqa qidiruv urinib ko'ring</p>
+            </div>
+        </div>
+
+        <div class="selection-info">
+            <div class="selected-pokemon" id="selected-info">
+                <h3>Tanlangan Pokémon: <span id="selected-name">Hech qaysi</span></h3>
+                <button class="battle-btn" id="start-battle" disabled>Jangni boshlash</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Battle Screen -->
+    <div id="battle-screen" class="screen">
+        <header class="battle-header">
+            <h1> Battle Arena </h1>
+            <div class="game-status" id="game-status">Jang boshlanmoqda...</div>
+        </header>
+
+        <div class="battle-arena">
+            <!-- Player Pokemon -->
+            <div class="pokemon-container player-side">
+                <div class="pokemon-info">
+                    <h2 class="pokemon-name" id="player-name">-</h2>
+                    <div class="pokemon-image" id="player-image">
+                        <img src="" alt="Player Pokemon">
+                    </div>
+                    <div class="hp-container">
+                        <div class="hp-label">HP: <span id="player-hp-text">100/100</span></div>
+                        <div class="hp-bar">
+                            <div class="hp-fill" id="player-hp-bar"></div>
+                        </div>
+                    </div>
+                    <div class="pokemon-stats">
+                        <div class="stat">ATK: <span id="player-attack">-</span></div>
+                        <div class="stat">DEF: <span id="player-defense">-</span></div>
+                        <div class="stat">SPD: <span id="player-speed">-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VS Divider -->
+            <div class="vs-divider">
+                <div class="vs-text">VS</div>
+            </div>
+
+            <!-- Enemy Pokemon -->
+            <div class="pokemon-container enemy-side">
+                <div class="pokemon-info">
+                    <h2 class="pokemon-name" id="enemy-name">-</h2>
+                    <div class="pokemon-image" id="enemy-image">
+                        <img src="" alt="Enemy Pokemon">
+                    </div>
+                    <div class="hp-container">
+                        <div class="hp-label">HP: <span id="enemy-hp-text">100/100</span></div>
+                        <div class="hp-bar">
+                            <div class="hp-fill" id="enemy-hp-bar"></div>
+                        </div>
+                    </div>
+                    <div class="pokemon-stats">
+                        <div class="stat">ATK: <span id="enemy-attack">-</span></div>
+                        <div class="stat">DEF: <span id="enemy-defense">-</span></div>
+                        <div class="stat">SPD: <span id="enemy-speed">-</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Battle Controls -->
+        <div class="battle-controls">
+            <div class="action-buttons">
+                <button class="btn attack-btn" id="attack-btn" disabled>
+                    <span class="btn-icon">  </span>
+                    Attack
+                </button>
+                <button class="btn defend-btn" id="defend-btn" disabled>
+                    <span class="btn-icon">  </span>
+                    Defend
+                </button>
+                <button class="btn special-btn" id="special-btn" disabled>
+                    <span class="btn-icon">  </span>
+                    Special
+                </button>
+            </div>
+            <div class="game-buttons">
+                <button class="btn restart-btn" id="restart-btn">Restart</button>
+                <button class="btn back-btn" id="back-btn">Back to Selection</button>
+            </div>
+        </div>
+
+        <!-- Battle Log -->
+        <div class="battle-log">
+            <h3>Battle Log</h3>
+            <div class="log-content" id="battle-log">
+                <div class="log-entry">Jangga tayyorlaning...</div>
+            </div>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div class="modal" id="game-over-modal">
+            <div class="modal-content">
+                <h2 id="game-result">Game Over</h2>
+                <p id="game-message">Message</p>
+                <div class="modal-buttons">
+                    <button class="btn restart-btn" id="modal-restart">Play Again</button>
+                    <button class="btn back-btn" id="modal-back">Change Pokemon</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading">
+        <div class="loading-content">
+            <div class="pokeball"></div>
+            <h2>Loading...</h2>
+        </div>
+    </div>
+
+    <script src="./js/pokemons.js"></script>
+    <script src="./js/enhanced-pokemons.js"></script>
+    <script src="./js/game.js"></script>
+</body>
+</html>

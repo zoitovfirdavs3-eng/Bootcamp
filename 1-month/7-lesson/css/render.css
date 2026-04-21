@@ -1,129 +1,398 @@
+/* ===================================
+   ENHANCED POKEMON RENDER CSS
+   Using New CSS Architecture
+   =================================== */
+
+/* Import main CSS system */
+@import url('main.css');
+
+/* ===================================
+   ENHANCED BODY & BACKGROUND
+   =================================== */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #f0f9ff, #fdf2f8);
+  font-family: var(--font-family-primary);
+  background: var(--gradient-hero);
   min-height: 100vh;
-  color: #1f2937;
+  color: var(--color-neutral-800);
   text-align: center;
+  position: relative;
 }
 
-/* TITLE */
+/* Background animation */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(240, 147, 251, 0.3) 0%, transparent 50%);
+  animation: backgroundFloat 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes backgroundFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(-20px, -20px) rotate(1deg); }
+  66% { transform: translate(20px, -10px) rotate(-1deg); }
+}
+
+/* ===================================
+   ENHANCED TYPOGRAPHY
+   =================================== */
 h1 {
-  margin-top: 20px;
-  font-size: 38px;
-  color: #2563eb;
+  margin-top: var(--space-5);
+  font-size: var(--text-4xl);
+  color: var(--color-primary-600);
   letter-spacing: 2px;
+  font-weight: var(--font-weight-black);
+  text-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.3);
+  animation: glow 3s ease-in-out infinite alternate;
+  position: relative;
+  z-index: 1;
 }
 
-/* FORM */
+@keyframes glow {
+  from { 
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  to { 
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(255, 255, 255, 0.5),
+      0 0 40px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* ===================================
+   ENHANCED FORM
+   =================================== */
 .js-form {
-  margin: 20px auto;
+  margin: var(--space-5) auto;
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: var(--space-3);
   flex-wrap: wrap;
+  max-width: 700px;
+  padding: var(--space-6);
+  background: var(--glass-bg);
+  border-radius: var(--radius-2xl);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  z-index: 1;
+  transition: var(--transition-normal);
 }
 
-/* INPUTS */
+.js-form:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2xl);
+}
+
+/* ===================================
+   ENHANCED INPUTS
+   =================================== */
 .js-name-inp,
 .js-type-inp {
-  padding: 10px 15px;
+  padding: var(--space-3) var(--space-4);
   width: 240px;
-  border: 2px solid #93c5fd;
-  border-radius: 10px;
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius-lg);
   outline: none;
-  transition: 0.2s;
-  font-size: 14px;
-  background: white;
+  transition: var(--transition-normal);
+  font-size: var(--text-sm);
+  background: rgba(255, 255, 255, 0.95);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-800);
+}
+
+.js-name-inp::placeholder,
+.js-type-inp::placeholder {
+  color: var(--color-neutral-500);
+  font-weight: var(--font-weight-normal);
 }
 
 .js-name-inp:focus,
 .js-type-inp:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
+  border-color: var(--color-primary-500);
+  box-shadow: 
+    0 5px 15px rgba(102, 126, 234, 0.3),
+    0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
 }
 
-/* LIST */
+/* ===================================
+   ENHANCED LIST
+   =================================== */
 .js-pokemons-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-5);
+  padding: var(--space-6);
   list-style: none;
   margin: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-/* CARD */
+/* ===================================
+   ENHANCED CARD
+   =================================== */
 .pokemon-card {
   width: 220px;
-  background: white;
-  border-radius: 18px;
-  padding: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  transition: 0.3s ease;
+  background: var(--card-bg);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-xl);
+  transition: var(--transition-normal);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  border: 3px solid transparent;
 }
 
-/* hover */
+.pokemon-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg) translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.pokemon-card:hover::before {
+  transform: rotate(45deg) translateX(100%);
+}
+
 .pokemon-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: var(--shadow-2xl);
+  border-color: rgba(102, 126, 234, 0.3);
 }
 
-/* inner div */
+/* ===================================
+   ENHANCED CARD CONTENT
+   =================================== */
 .pokemon-card > div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
-/* NAME */
 .pokemon-name {
-  font-size: 18px;
-  color: #2563eb;
+  font-size: var(--text-lg);
+  color: var(--color-primary-600);
   margin: 0;
+  font-weight: var(--font-weight-bold);
+  text-transform: capitalize;
 }
 
-/* ID */
 .pokemon-id {
-  font-size: 13px;
-  color: #6b7280;
+  font-size: var(--text-sm);
+  color: var(--color-neutral-600);
+  font-weight: var(--font-weight-semibold);
 }
 
-/* IMAGE */
 .pokemon-img {
   width: 110px;
   height: 110px;
   object-fit: contain;
-  margin: 5px 0;
-  transition: 0.3s;
+  margin: var(--space-1) 0;
+  transition: var(--transition-normal);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
-/* IMAGE HOVER */
 .pokemon-card:hover .pokemon-img {
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.2));
 }
 
-/* TYPE */
 .pokemon-type {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #1f2937;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: bold;
+  background: var(--gradient-warning);
+  color: var(--color-neutral-800);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-fast);
 }
 
-/* OPTIONAL small glow effect */
-.pokemon-card::before {
+.pokemon-type:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===================================
+   ENHANCED CARD TOP BAR
+   =================================== */
+.pokemon-card::after {
   content: "";
   position: absolute;
   width: 100%;
   height: 5px;
   top: 0;
   left: 0;
-  background: linear-gradient(90deg, #3b82f6, #f472b6, #fbbf24);
+  background: var(--gradient-primary);
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+@media (max-width: 768px) {
+  .js-form {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  
+  .js-name-inp,
+  .js-type-inp {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .js-pokemons-list {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-4);
+  }
+  
+  .pokemon-card {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  h1 {
+    font-size: var(--text-3xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .js-pokemons-list {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-3);
+  }
+  
+  .pokemon-card {
+    padding: var(--space-3);
+  }
+  
+  .pokemon-img {
+    width: 90px;
+    height: 90px;
+  }
+  
+  h1 {
+    font-size: var(--text-2xl);
+  }
+}
+
+/* ===================================
+   DARK MODE SUPPORT
+   =================================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: var(--gradient-dark);
+  }
+  
+  .js-form {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .js-name-inp,
+  .js-type-inp {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-neutral-200);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .pokemon-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .pokemon-name {
+    color: var(--color-primary-400);
+  }
+  
+  .pokemon-id {
+    color: var(--color-neutral-400);
+  }
+}
+
+/* ===================================
+   ACCESSIBILITY IMPROVEMENTS
+   =================================== */
+.pokemon-card:focus-visible {
+  outline: 3px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+.js-name-inp:focus-visible,
+.js-type-inp:focus-visible {
+  outline: 3px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* ===================================
+   LOADING STATES
+   =================================== */
+.pokemon-card.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.pokemon-card.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* ===================================
+   PERFORMANCE OPTIMIZATIONS
+   =================================== */
+.pokemon-card,
+.js-name-inp,
+.js-type-inp {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.js-pokemons-list {
+  contain: layout style paint;
 }

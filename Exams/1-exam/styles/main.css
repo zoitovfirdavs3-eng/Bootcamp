@@ -1,0 +1,113 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: #fff;
+  padding: 20px;
+}
+
+/* FORM (SEARCH + SELECT) */
+.js-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.js-name-inp {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  outline: none;
+  background: #1e293b;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.js-name-inp::placeholder {
+  color: #94a3b8;
+}
+
+.js-name-inp:focus {
+  border-color: #22c55e;
+}
+
+/* SELECT */
+.js-select {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #1e293b;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.js-select:hover {
+  background: #334155;
+}
+
+/* GRID */
+.js-movies-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+  list-style: none;
+}
+
+/* CARD */
+.js-movies-list li {
+  background: #1e293b;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.js-movies-list li:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* IMAGE */
+.js-movies-list img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* CONTENT */
+.js-movies-list h3 {
+  font-size: 18px;
+  padding: 12px;
+}
+
+.js-movies-list p {
+  font-size: 14px;
+  padding: 0 12px 10px;
+  color: #cbd5f5;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* GENRE */
+.js-movies-list h4 {
+  margin-top: auto;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #22c55e;
+  font-weight: 600;
+}

@@ -54,8 +54,11 @@
 // const fruites = ["Olma", "anor", "Nok"];
 
 // const allLengthFn = function (arr){
+//     // barcha string length larini yig'ish uchun o'zgaruvchi yaratdim
 //     let allLen = 0;
+//     // for orqali arrayni aylanib har bir so'zni aylanib chiqdim
 //     for(let str of arr){
+//         // har bitta so'zning length ni alLen o'zgaruvchisiga saqladim
 //         allLen += str.length
 //     };
 //     return allLen;

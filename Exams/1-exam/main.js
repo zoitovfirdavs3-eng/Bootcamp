@@ -13,10 +13,10 @@ function handleRenderMovies(films) {
   const docFragment = document.createDocumentFragment();
   for (let movie of films) {
     const cloneTemp = elTemp.content.cloneNode(true);
-    const movieImage = cloneTemp.querySelector("img").src = movie.poster;
-    const movieName = cloneTemp.querySelector("h3").textContent = movie.title;
-    const movieDescription = cloneTemp.querySelector("p").textContent = movie.overview;
-    const movieGenre = cloneTemp.querySelector("h4").textContent = movie.genres;
+    cloneTemp.querySelector("img").src = movie.poster;
+    cloneTemp.querySelector("h3").textContent = movie.title;
+    cloneTemp.querySelector("p").textContent = movie.overview;
+    cloneTemp.querySelector("h4").textContent = movie.genres;
 
     docFragment.append(cloneTemp);
   }
@@ -40,18 +40,14 @@ const handleSearchFn = function (evt) {
 elInpName.addEventListener("keyup", handleSearchFn);
 
 // Search by select genre funksiya
-const handleSelectSearchFn = function(evt){
-    evt.preventDefault();
-    elMoviesList.innerHTML = '';
-    let val = elSelectGenre.value;
-    if(val == "All") return handleRenderMovies(films)
-    let filterMoviesByGenre = films.filter(function(film){
-        // Bu yerda for ishlatganimning sababi -> faqatgina bitta janrga ega bolgan kinoni chiqarmasligi uchun va for yordamida shu janr qatnashgan barcha kinoni olsa boladi
-        for(let genre of film.genres){
-            return genre == val
-        }
-    });
-    handleRenderMovies(filterMoviesByGenre)
-}
+const handleSelectSearchFn = function (evt) {
+  evt.preventDefault();
+  let val = elSelectGenre.value;
+  if (val == "All") return handleRenderMovies(films);
+  let filterMoviesByGenre = films.filter(function (film) {
+    return film.genres.includes(val);
+  });
+  handleRenderMovies(filterMoviesByGenre);
+};
 
 elSelectGenre.addEventListener("change", handleSelectSearchFn);

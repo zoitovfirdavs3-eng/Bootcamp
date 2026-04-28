@@ -10,13 +10,14 @@ const elMoviesList = document.querySelector(".js-movies-list");
 
 // Movie larni render qilish
 function handleRenderMovies(films) {
+  elMoviesList.innerHTML = "";
   const docFragment = document.createDocumentFragment();
   for (let movie of films) {
     const cloneTemp = elTemp.content.cloneNode(true);
     cloneTemp.querySelector("img").src = movie.poster;
     cloneTemp.querySelector("h3").textContent = movie.title;
     cloneTemp.querySelector("p").textContent = movie.overview;
-    cloneTemp.querySelector("h4").textContent = movie.genres;
+    cloneTemp.querySelector("h4").textContent = movie.genres.join(", ");
 
     docFragment.append(cloneTemp);
   }
@@ -28,7 +29,6 @@ handleRenderMovies(films);
 // Search by name funksiyasi
 const handleSearchFn = function (evt) {
   evt.preventDefault();
-  elMoviesList.innerHTML = "";
   let val = elInpName.value;
   let searchRegex = new RegExp(val, "gi");
   let filterMoviesByName = films.filter(function (film) {
@@ -37,7 +37,7 @@ const handleSearchFn = function (evt) {
   handleRenderMovies(filterMoviesByName);
 };
 
-elInpName.addEventListener("keyup", handleSearchFn);
+elForm.addEventListener("submit", handleSearchFn);
 
 // Search by select genre funksiya
 const handleSelectSearchFn = function (evt) {

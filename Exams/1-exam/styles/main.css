@@ -1,158 +1,217 @@
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: sans-serif;
+/* ================================================
+   🎬 MOVIES APP — Cinematic Dark Theme
+   Fonts: Bebas Neue (heading) + DM Sans (body)
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+  --bg:         #0a0a0f;
+  --surface:    #111118;
+  --card:       #16161f;
+  --border:     #ffffff0f;
+  --accent:     #e8b14f;
+  --accent2:    #c0392b;
+  --text:       #e8e8f0;
+  --muted:      #7a7a95;
+  --radius:     12px;
+  --gap:        24px;
 }
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background: #0f172a;
-  color: #fff;
-  padding: 20px;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, #e8b14f18 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230a0a0f'/%3E%3Crect width='1' height='1' fill='%23ffffff05'/%3E%3C/svg%3E");
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 80px;
 }
 
-/* FORM (SEARCH + SELECT) */
+/* ── Heading ── */
+.heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 56px 24px 8px;
+  background: linear-gradient(135deg, var(--accent) 30%, #fff 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+/* ── Form ── */
 .js-form {
   display: flex;
-  gap: 12px;
-  margin-bottom: 30px;
   flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  padding: 32px 24px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* shared input / select style */
+.js-form input,
+.js-form select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  padding: 12px 18px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .js-name-inp {
-  flex: 1;
-  min-width: 220px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid transparent;
-  outline: none;
-  background: #1e293b;
-  color: #fff;
-  transition: 0.3s;
+  flex: 1 1 260px;
 }
 
-.js-name-inp::placeholder {
-  color: #94a3b8;
-}
-
-.js-name-inp:focus {
-  border-color: #22c55e;
-}
-
-/* SELECT */
 .js-select {
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  background: #1e293b;
-  color: #fff;
+  flex: 0 1 200px;
   cursor: pointer;
-  transition: 0.3s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7a95' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
 }
 
-.js-select:hover {
-  background: #334155;
+.js-form input:focus,
+.js-form select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px #e8b14f22;
 }
 
-/* GRID */
+.js-form input::placeholder { color: var(--muted); }
+.js-form select option { background: #1e1e2a; }
+
+/* ── Movies Grid ── */
 .js-movies-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 20px;
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--gap);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-/* CARD */
+/* ── Movie Card ── */
 .js-movies-list li {
-  background: #1e293b;
-  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   overflow: hidden;
-  transition: 0.3s;
   display: flex;
   flex-direction: column;
+  cursor: default;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+  animation: fadeUp 0.4s ease both;
 }
 
 .js-movies-list li:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 48px #00000066, 0 0 0 1px var(--accent)44;
+  border-color: var(--accent)55;
 }
 
-/* IMAGE */
-.js-movies-list img {
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* stagger cards */
+.js-movies-list li:nth-child(1)  { animation-delay: 0.04s; }
+.js-movies-list li:nth-child(2)  { animation-delay: 0.08s; }
+.js-movies-list li:nth-child(3)  { animation-delay: 0.12s; }
+.js-movies-list li:nth-child(4)  { animation-delay: 0.16s; }
+.js-movies-list li:nth-child(5)  { animation-delay: 0.20s; }
+.js-movies-list li:nth-child(6)  { animation-delay: 0.24s; }
+.js-movies-list li:nth-child(n+7){ animation-delay: 0.28s; }
+
+/* Poster */
+.js-movies-list li img {
   width: 100%;
-  height: 300px;
+  aspect-ratio: 2/3;
   object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--border);
+  transition: filter 0.3s;
 }
 
-/* CONTENT */
-.js-movies-list h3 {
-  font-size: 18px;
-  padding: 12px;
+.js-movies-list li:hover img {
+  filter: brightness(1.08) saturate(1.1);
 }
 
-.js-movies-list p {
-  font-size: 14px;
-  padding: 0 12px 10px;
-  color: #cbd5f5;
+/* Card body */
+.js-movies-list li h3,
+.js-movies-list li p,
+.js-movies-list li h4 {
+  padding: 0 14px;
+}
 
+.js-movies-list li h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  padding-top: 14px;
+  padding-bottom: 4px;
+  line-height: 1.2;
+}
+
+.js-movies-list li p {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  /* clamp to 3 lines */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  flex: 1;
+  padding-bottom: 10px;
 }
 
-/* GENRE */
-.js-movies-list h4 {
+/* Genre badge */
+.js-movies-list li h4 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: #e8b14f12;
+  border-top: 1px solid var(--border);
+  padding: 8px 14px;
   margin-top: auto;
-  padding: 10px 12px;
-  font-size: 13px;
-  color: #22c55e;
-  font-weight: 600;
 }
 
-.heading {
-  font-size: 42px;
-  font-weight: 900;
-  text-align: center;
-  margin-bottom: 30px;
-  letter-spacing: 2px;
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 99px; }
 
-  background: linear-gradient(90deg, #22c55e, #4ade80, #22c55e);
-  background-size: 200% auto;
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  animation: gradientMove 4s linear infinite;
-}
-
-/* Gradient animation */
-@keyframes gradientMove {
-  0% {
-    background-position: 0% center;
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .js-movies-list {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+    padding: 0 14px;
   }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-/* Tagida line */
-.heading::after {
-  content: "";
-  display: block;
-  width: 90px;
-  height: 4px;
-  margin: 12px auto 0;
-  border-radius: 10px;
-
-  background: linear-gradient(90deg, #22c55e, #4ade80);
-  box-shadow: 0 0 10px rgba(34, 197, 94, 0.7);
-}
-
-/* Hover effekt (desktopda zo‘r chiqadi) */
-.heading:hover {
-  transform: scale(1.05);
-  transition: 0.3s;
+  .js-form { padding: 20px 14px 30px; }
 }

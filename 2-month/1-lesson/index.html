@@ -3,33 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
+    <title>Contact List</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body>
-    <template class="js-temp">
-        <li class="js-li">
-            <h3></h3>
-            <h4></h4>
-            <p></p>
-            <button class="js-call-btn">📞</button>
+
+    <template class="js-user-temp">
+        <li class="w-full sm:w-96 h-auto sm:h-36 bg-white rounded-xl flex flex-col items-center justify-center mb-2 py-4 px-3">
+            <h2 class="js-user-name text-2xl sm:text-4xl mb-3 text-center">Salom</h2>
+            <div class="call-box w-full flex items-center justify-center gap-3 sm:gap-5">
+                <a href="tel:+998937340928" class="js-call-btn bg-green-700 text-white w-28 sm:w-30 h-10 rounded-xl flex items-center justify-center text-sm sm:text-base">Telefon qilish</a>
+                <button class="js-contact-del-btn bg-red-500 w-20 sm:w-30 h-10 rounded-xl text-sm sm:text-base">Delete</button>
+            </div>
         </li>
     </template>
-    <h1>Contacts</h1>
 
-    <form class="js-form">
-        <input class="js-first-name-inp" type="text" placeholder="Isn kiriting">
-        <input class="js-last-name-inp" type="text" placeholder="Familiya kiriting">
-        <input class="js-number-inp" type="number" placeholder="Raqam kiriting">
-        <button>Save</button>
-    </form>
+    <header class="w-full h-16 sm:h-24 flex items-center justify-center">
+        <h1 class="text-3xl sm:text-6xl text-center">Contact list</h1>
+    </header>
 
-    <ul class="js-contact-list">
+    <main class="w-full min-h-screen pb-8">
+        <div class="container mx-auto w-11/12 sm:w-5/6">
+            <section id="hero-section" class="w-full flex flex-col sm:flex-row min-h-screen sm:h-150">
 
-    </ul>
+                <div class="get-contact w-full sm:w-1/2 bg-green-300 rounded-t-2xl sm:rounded-t-none sm:rounded-l-2xl flex flex-col items-center justify-center gap-6 py-8 sm:py-0">
+                    <form autocomplete="off" class="js-form w-full flex flex-col items-center justify-center gap-6 px-4 sm:px-0">
+                        <input autocomplete="off" type="text" id="username"
+                            class="js-username-inp w-full sm:w-96 h-12 rounded-xl bg-white outline-hidden text-center"
+                            placeholder="Name" required>
+                        <input autocomplete="off" id="lastname"
+                            class="js-secname-inp w-full sm:w-96 h-12 rounded-xl bg-white outline-hidden text-center"
+                            placeholder="Surname">
+                        <input autocomplete="off" type="number" id="usernumber" pattern="\d{12}"
+                            class="js-usernumber-inp w-full sm:w-96 h-12 rounded-xl bg-white outline-hidden text-center"
+                            placeholder="Phone Number" required>
+                        <button class="js-send-btn bg-green-700 w-40 sm:w-48 h-14 sm:h-15 rounded-xl text-white text-base" type="submit">Yuborish</button>
+                    </form>
+                </div>
 
-    <script src="./db.js"></script>
+                <div class="give-contact w-full sm:w-1/2 bg-blue-200 rounded-b-2xl sm:rounded-b-none sm:rounded-r-2xl flex flex-col items-center justify-center py-6 sm:py-0 min-h-64">
+                    <ul class="js-user-list w-full px-4 flex flex-col items-center">
+                    </ul>
+                </div>
+
+            </section>
+        </div>
+    </main>
+    
     <script src="./tasks.js"></script>
     <script src="./index.js"></script>
 </body>

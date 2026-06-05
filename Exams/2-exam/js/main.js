@@ -1,14 +1,18 @@
-// books = books.slice(0, 50);
 const elBookList = document.querySelector(".js-book-list");
 const elBookTemp = document.querySelector(".js-book-temp").content;
 const elForm = document.querySelector(".js-form");
 const elCountrySelect = elForm.querySelector(".js-country-select");
-const elBookmarkBtn = document.querySelector(".js-bookmark-btn");
 const elBookmarkTemp = document.querySelector(".js-bookmark-temp").content;
 const elBookmarkList = document.querySelector(".js-bookmark-list");
+const elBookmarkLink = document.querySelector(".js-bookmark-link");
+const elBookmarkCount = document.querySelector(".js-bookmark-count");
 
 const bookmarkStorage = window.localStorage.getItem("bookmark");
 const bookmark = bookmarkStorage ? JSON.parse(bookmarkStorage) : [];
+
+const updateBookmarkCount = () => {
+  elBookmarkCount.textContent = bookmark.length;
+};
 
 const handleRenderBooks = (arr) => {
   elBookList.innerHTML = "";
@@ -24,7 +28,17 @@ const handleRenderBooks = (arr) => {
     cloneBookTemp.querySelector(".js-book-language").textContent =
       book.language;
     cloneBookTemp.querySelector(".js-about-link").href = book.link;
-    cloneBookTemp.querySelector(".js-bookmark").dataset.id = originalIndex;
+
+    const bookmarkImg = cloneBookTemp.querySelector(".js-bookmark");
+    bookmarkImg.dataset.id = originalIndex;
+
+    const isBookmarked = bookmark.some(
+      (b) => books.indexOf(b) === originalIndex,
+    );
+    bookmarkImg.src = isBookmarked
+      ? "/icons/star.svg"
+      : "/icons/star-border.svg";
+
     docFrag.append(cloneBookTemp);
   });
   elBookList.append(docFrag);
@@ -33,9 +47,8 @@ const handleRenderBooks = (arr) => {
 const handleFilterCountries = (arr) => {
   const result = [];
   for (let book of arr) {
-    const bookCoutnry = book.country;
-    if (!result.includes(bookCoutnry)) {
-      result.push(bookCoutnry);
+    if (!result.includes(book.country)) {
+      result.push(book.country);
     }
   }
   return result;
@@ -63,29 +76,36 @@ const sortObj = {
 const handleSearchBook = (evt) => {
   evt.preventDefault();
 
+  // ✅ FormData to'g'ri ishlatildi
   const formData = new FormData(evt.target);
-  
-  const searchRegex = new RegExp(search.value, "gi");
-  const searchAuthorRegex = new RegExp(author.value, "gi");
+  const searchVal = formData.get("search");
+  const authorVal = formData.get("author");
+  const minYearVal = formData.get("minYear");
+  const maxYearVal = formData.get("maxYear");
+  const countryVal = formData.get("country") || "all";
+  const sortVal = formData.get("sort");
+
+  const searchRegex = new RegExp(searchVal, "gi");
+  const searchAuthorRegex = new RegExp(authorVal, "gi");
 
   const searchBooks = books.filter((book) => {
     return (
-      (search.value == "" || book.title.match(searchRegex)) &&
-      (author.value == "" || book.author.match(searchAuthorRegex)) &&
-      (minYear.value == "" || book.year >= minYear.value) &&
-      (maxYear.value == "" || book.year <= maxYear.value) &&
-      (country.value == "all" || book.country.includes(country.value))
+      (searchVal === "" || book.title.match(searchRegex)) &&
+      (authorVal === "" || book.author.match(searchAuthorRegex)) &&
+      (minYearVal === "" || book.year >= +minYearVal) &&
+      (maxYearVal === "" || book.year <= +maxYearVal) &&
+      (countryVal === "all" || book.country.includes(countryVal))
     );
   });
 
-  searchBooks.sort(sortObj[sort.value]);
+  searchBooks.sort(sortObj[sortVal]);
   handleRenderBooks(searchBooks);
 };
 
 elForm.addEventListener("submit", handleSearchBook);
 
 const handleRenderBookmarkBooks = (arr) => {
-  elBookmarkList.innerHTML = "";
+  elBookmarkList.innerHTML = "<h2>Bookmarked Books</h2>";
   const docFrag = new DocumentFragment();
   arr.forEach((book) => {
     const originalIndex = books.indexOf(book);
@@ -101,6 +121,7 @@ const handleRenderBookmarkBooks = (arr) => {
     docFrag.append(cloneTemp);
   });
   elBookmarkList.append(docFrag);
+  updateBookmarkCount();
 };
 
 const handleBookClick = (evt) => {
@@ -109,11 +130,10 @@ const handleBookClick = (evt) => {
     const bookId = +elTarget.dataset.id;
     const checkBook = bookmark.some((book) => books.indexOf(book) === bookId);
     if (!checkBook) {
-      const findBook = books[bookId];
-      bookmark.push(findBook);
+      bookmark.push(books[bookId]);
       window.localStorage.setItem("bookmark", JSON.stringify(bookmark));
       handleRenderBookmarkBooks(bookmark);
-      elTarget.src = "/Exams/2-exam/icons/star.svg"
+      elTarget.src = "/icons/star.svg";
     } else {
       alert("Bu kitob allaqachon qo'shilgan");
     }
@@ -123,7 +143,7 @@ const handleBookClick = (evt) => {
 elBookList.addEventListener("click", handleBookClick);
 
 const handleRemoveBookmark = (evt) => {
-  const elTarget = evt.target.closest(".js-remove-btn"); // closest qo'shildi
+  const elTarget = evt.target.closest(".js-remove-btn");
   if (!elTarget) return;
 
   const id = +elTarget.dataset.id;
@@ -134,11 +154,20 @@ const handleRemoveBookmark = (evt) => {
     localStorage.setItem("bookmark", JSON.stringify(bookmark));
     handleRenderBookmarkBooks(bookmark);
 
-    elBookList.querySelector(`.js-bookmark[data-id="${id}"]`).src = "/Exams/2-exam/icons/star-border.svg"
+    const bookmarkImg = elBookList.querySelector(
+      `.js-bookmark[data-id="${id}"]`,
+    );
+    if (bookmarkImg) bookmarkImg.src = "/icons/star-border.svg";
   }
 };
 
 elBookmarkList.addEventListener("click", handleRemoveBookmark);
 
+elBookmarkLink.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  elBookmarkList.classList.toggle("show");
+});
+
 handleRenderBooks(books);
 handleRenderBookmarkBooks(bookmark);
+updateBookmarkCount();

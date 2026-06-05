@@ -1,201 +1,159 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Online Books</title>
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <!-- BOOKMARK MODAL / LIST -->
-    <section class="bookmark-section">
-      <h2>My saved books</h2>
-      <div class="books-grid js-bookmark-list"></div>
-    </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Books</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
 
-    <!-- SEARCH SECTION -->
+<body>
+
+  <header>
+    <div class="navbar">
+      <div class="logo">
+        <img src="icons/book-icon.svg" alt="Book icon">
+        <span>Online books</span>
+      </div>
+
+      <ul class="nav-links">
+        <li>
+          <a class="js-bookmark-link" href="#">
+            <img src="icons/star.svg" alt="Bookmark" class="bookmark-nav-icon">
+            Bookmark (<span class="js-bookmark-count">0</span>)
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+
+  <form class="js-form">
     <section class="search-section">
-      <form class="search-box js-form">
-        <div class="search-input-wrap">
-          <img
-            src="/Exams/2-exam/icons/search.svg"
-            alt="search"
-            class="input-icon"
-          />
-          <input
-            type="text"
-            name="search"
-            class="search-input"
-            placeholder="Enter book name"
-            id="search"
-          />
+      <div class="search-container">
+
+        <div class="top-search">
+          <input class="js-search-inp" id="search" name="search" type="text" placeholder="Search" />
+          <button type="submit">Search</button>
         </div>
 
-        <div class="search-filters">
-          <select id="sort" name="sort" class="filter-select">
-            <option value="" selected disabled hidden>Sort Movies</option>
+        <div class="filter-by-letters">
+          <select class="js-sort-select" id="sort" name="sort">
             <option value="az">A-Z</option>
             <option value="za">Z-A</option>
-            <option value="new-year">Newest</option>
-            <option value="old-year">Oldest</option>
+            <option value="old-year">Eng eski</option>
+            <option value="new-year">Eng yangi</option>
           </select>
 
-          <select id="country" class="filter-select js-country-select">
-            <option selected disabled hidden>Davlatni tanlang</option>
+          <input class="js-min-year-inp" id="minYear" name="minYear" type="number" placeholder="Min yil" />
+          <input class="js-max-year-inp" id="maxYear" name="maxYear" type="number" placeholder="Max yil" />
+
+          <input class="js-author-inp" id="author" name="author" type="text" placeholder="Search Author" />
+
+          <select class="js-country-select" id="country" name="country">
             <option value="all">All</option>
           </select>
-
-          <div class="filter-input-wrap">
-            <img src="/Exams/2-exam/icons/author.svg" class="input-icon" />
-            <input
-              type="text"
-              id="author"
-              name="author"
-              class="filter-input"
-              placeholder="Author"
-            />
-          </div>
-
-          <div class="filter-input-wrap">
-            <img src="/Exams/2-exam/icons/year.svg" class="input-icon" />
-            <input
-              type="text"
-              id="minYear"
-              name="minYear"
-              class="filter-input"
-              placeholder="Min year"
-            />
-          </div>
-
-          <div class="filter-input-wrap">
-            <img src="/Exams/2-exam/icons/year.svg" class="input-icon" />
-            <input
-              type="text"
-              id="maxYear"
-              name="maxYear"
-              class="filter-input"
-              placeholder="Max year"
-            />
-          </div>
-
-          <button type="submit" class="search-btn">Search</button>
         </div>
-      </form>
+
+      </div>
     </section>
+  </form>
 
-    <!-- BOOKS GRID -->
-    <main class="main">
-      <div class="books-grid js-book-list" id="books-grid">
-        <!-- JS orqali render qilinadi -->
-      </div>
-    </main>
 
-    <!-- BOOK CARD TEMPLATE -->
-    <template id="book-card-template" class="js-book-temp">
-      <div class="book-card">
-        <!-- COVER -->
-        <div class="book-cover">
-          <img class="js-book-image" data-field="cover" alt="Book cover" />
+  <div class="main-content">
+    <section class="books-container js-book-list"></section>
+
+    <ul class="js-bookmark-list">
+      <h2>Bookmarked Books</h2>
+    </ul>
+  </div>
+
+
+  <template class="js-book-temp">
+    <div class="book-card" tabindex="0">
+
+      <img
+        class="book-img js-book-image"
+        src="https://covers.openlibrary.org/b/id/10253683-L.jpg"
+        alt="Book Cover"
+      />
+
+      <h2 class="book-title js-book-title"></h2>
+
+      <p class="author">
+        <img src="icons/author.svg" alt="Author" />
+        <span class="js-book-author"></span>
+      </p>
+
+      <div class="book-info">
+        <div class="info-item">
+          <img src="icons/year.svg" alt="Year" />
+          <span class="year js-book-year"></span>
         </div>
+        <div class="info-item">
+          <img src="icons/pages.svg" alt="Pages" />
+          <span class="pages js-book-pages"></span>
+        </div>
+        <div class="info-item">
+          <img src="icons/language.svg" alt="Language" />
+          <span class="language js-book-language"></span>
+        </div>
+      </div>
 
-        <!-- INFO -->
+      <div class="book-links">
+        <a class="wiki-link js-about-link" href="#" target="_blank">Wikipedia</a>
+        <img class="js-bookmark" src="/icons/star-border.svg" alt="Bookmark" />
+      </div>
+
+    </div>
+  </template>
+
+
+  <template class="js-bookmark-temp">
+    <li class="bookmark-item">
+      <div class="bookmark-box">
+
+        <img
+          class="book-img js-book-image"
+          src="https://covers.openlibrary.org/b/id/10253683-L.jpg"
+          alt="Book Cover"
+        />
+
+        <h2 class="book-title js-book-title"></h2>
+
+        <p class="author">
+          <img src="icons/author.svg" alt="Author" />
+          <span class="js-book-author"></span>
+        </p>
+
         <div class="book-info">
-          <!-- TITLE -->
-          <h3 class="js-book-title" data-field="title"></h3>
-
-          <!-- AUTHOR (TO‘G‘RI JOY!) -->
-          <p class="js-book-author" data-field="author"></p>
-
-          <!-- META -->
-          <div class="book-meta">
-            <span class="meta-item">
-              <img src="/Exams/2-exam/icons/year.svg" class="meta-icon" />
-              <span class="js-book-year" data-field="year"></span>
-            </span>
-
-            <span class="meta-item">
-              <img src="/Exams/2-exam/icons/pages.svg" class="meta-icon" />
-              <span class="js-book-pages" data-field="pages"></span>
-            </span>
-
-            <span class="meta-item">
-              <img src="/Exams/2-exam/icons/language.svg" class="meta-icon" />
-              <span class="js-book-language" data-field="language"></span>
-            </span>
+          <div class="info-item">
+            <img src="icons/year.svg" alt="Year" />
+            <span class="year js-book-year"></span>
           </div>
-
-          <!-- FOOTER -->
-          <div class="book-footer">
-            <a href="#" class="js-about-link">
-              <img src="/Exams/2-exam/icons/book-icon.svg" class="about-icon" />
-              About book
-            </a>
-
-            <button class="fav-btn" type="button">
-              <img
-                src="/Exams/2-exam/icons/star-border.svg"
-                class="star-icon js-bookmark"
-                data-field="star"
-                alt="favorite"
-              />
-            </button>
+          <div class="info-item">
+            <img src="icons/pages.svg" alt="Pages" />
+            <span class="pages js-book-pages"></span>
+          </div>
+          <div class="info-item">
+            <img src="icons/language.svg" alt="Language" />
+            <span class="language js-book-language"></span>
           </div>
         </div>
+
+        <div class="book-links">
+          <a class="wiki-link js-about-link" href="#" target="_blank">Wikipedia</a>
+          <button type="button" class="js-remove-btn">Delete</button>
+        </div>
+
       </div>
-    </template>
+    </li>
+  </template>
 
-    <!-- BOOKMARK MODAL TEMPLATE -->
-    <template class="js-bookmark-temp">
-      <div class="book-card">
-        <!-- COVER -->
-        <div class="book-cover">
-          <img class="js-book-image" alt="Book cover" />
-        </div>
 
-        <!-- INFO -->
-        <div class="book-info">
-          <h3 class="js-book-title"></h3>
-          <p class="js-book-author"></p>
+  <script src="js/books.js"></script>
+  <script src="js/main.js"></script>
 
-          <div class="book-meta">
-            <span class="meta-item">
-              <img src="/Exams/2-exam/icons/year.svg" class="meta-icon" />
-              <span class="js-book-year"></span>
-            </span>
-
-            <span class="meta-item">
-              <img src="/Exams/2-exam/icons/pages.svg" class="meta-icon" />
-              <span class="js-book-pages"></span>
-            </span>
-
-            <span class="meta-item">
-              <img src="/Exams/2-exam/icons/language.svg" class="meta-icon" />
-              <span class="js-book-language"></span>
-            </span>
-          </div>
-
-          <div class="book-footer">
-            <a href="#" class="js-about-link">
-              <img src="/Exams/2-exam/icons/book-icon.svg" class="about-icon" />
-              About book
-            </a>
-
-            <!-- O'chirish tugmasi -->
-            <button class="remove-btn js-remove-btn" type="button">
-              <img
-                src="/Exams/2-exam/icons/bookmark.svg"
-                class="bookmark-icon"
-                alt="remove"
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-    </template>
-
-    <!-- scripts -->
-    <script src="./js/books.js"></script>
-    <script src="./js/main.js"></script>
-  </body>
+</body>
 </html>

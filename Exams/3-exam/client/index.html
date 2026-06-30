@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Countries</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <h2>Where in the world?</h2>
+      <button id="darkModeBtn">🌙 Dark Mode</button>
+    </header>
+
+    <!-- CONTROLS -->
+    <section class="controls">
+      <!-- SEARCH -->
+      <form class="js-form">
+        <input
+          type="text"
+          id="searchInput"
+          name="search"
+          placeholder="Search for a country..."
+        />
+
+        <select id="regionFilter" name="region">
+          <option value="">All Regions</option>
+          <option value="Africa">Africa</option>
+          <option value="Americas">Americas</option>
+          <option value="Asia">Asia</option>
+          <option value="Europe">Europe</option>
+          <option value="Oceania">Oceania</option>
+        </select>
+
+        <select id="sortSelect" name="sort">
+          <option value="">Sort</option>
+          <option value="name_asc">Name A-Z</option>
+          <option value="name_desc">Name Z-A</option>
+          <option value="pop-asc">Population ↑</option>
+          <option value="pop-desc">Population ↓</option>
+        </select>
+
+        <!-- MUHIM -->
+        <button type="submit">Search</button>
+      </form>
+    </section>
+
+    <!-- CARDS -->
+    <main class="container" id="countriesContainer">
+      <!-- JS render qiladi -->
+    </main>
+
+    <!-- PAGINATION -->
+    <div class="pagination" id="pagination">
+      <!-- JS orqali buttonlar chiqadi -->
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal hidden" id="modal">
+      <div class="modal-content">
+        <span id="closeModal">&times;</span>
+        <div id="modalBody">
+          <!-- detail shu yerga tushadi -->
+        </div>
+      </div>
+    </div>
+
+    <template id="cardTemplate">
+      <div class="card">
+        <img class="card-flag" src="" alt="flag" />
+
+        <div class="card-body">
+          <h3 class="card-title"></h3>
+          <p><b>Population:</b> <span class="card-population"></span></p>
+          <p><b>Region:</b> <span class="card-region"></span></p>
+          <p><b>Capital:</b> <span class="card-capital"></span></p>
+
+          <button class="like-btn">❤️</button>
+        </div>
+      </div>
+    </template>
+
+    <script src="./countries.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
